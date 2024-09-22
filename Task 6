@@ -1,0 +1,87 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+data = pd.read_csv('heart (1).csv')
+
+# 1. Data Cleaning: Handling missing data, outliers, and inconsistencies
+# Check for missing values
+missing_values = data.isnull().sum()
+
+# Drop rows with missing values
+data_cleaned = data.dropna()
+
+# Check for outliers using boxplots
+plt.figure(figsize=(12,6))
+sns.boxplot(data=data_cleaned)
+plt.title('Boxplot of all Features')
+plt.show()
+
+# 2. Exploratory Data Analysis (EDA)
+# Summary statistics
+summary_stats = data_cleaned.describe()
+
+# Distribution of target variable (heart disease presence)
+plt.figure(figsize=(6,4))
+sns.countplot(x='target', data=data_cleaned)
+plt.title('Distribution of Heart Disease (Target Variable)')
+plt.show()
+
+# Correlation matrix
+plt.figure(figsize=(10,8))
+sns.heatmap(data_cleaned.corr(), annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix of Features')
+plt.show()
+
+# 3. Question Formulation
+# Example Questions:
+# Q1: Does age affect the likelihood of heart disease?
+plt.figure(figsize=(8,6))
+sns.histplot(data=data_cleaned, x='age', hue='target', kde=True)
+plt.title('Age Distribution by Heart Disease Status')
+plt.show()
+
+# Q2: How does cholesterol level relate to heart disease?
+plt.figure(figsize=(8,6))
+sns.histplot(data=data_cleaned, x='chol', hue='target', kde=True)
+plt.title('Cholesterol Levels by Heart Disease Status')
+plt.show()
+
+# Q3: What is the distribution of chest pain types among patients with and without heart disease?
+plt.figure(figsize=(8,6))
+sns.countplot(x='cp', hue='target', data=data_cleaned)
+plt.title('Chest Pain Type Distribution by Heart Disease Status')
+plt.show()
+
+# Q4: Is there a relationship between fasting blood sugar and heart disease?
+plt.figure(figsize=(8,6))
+sns.countplot(x='fbs', hue='target', data=data_cleaned)
+plt.title('Fasting Blood Sugar and Heart Disease')
+plt.show()
+
+# Q5: Does the maximum heart rate achieved correlate with heart disease?
+plt.figure(figsize=(8,6))
+sns.histplot(data=data_cleaned, x='thalach', hue='target', kde=True)
+plt.title('Maximum Heart Rate by Heart Disease Status')
+plt.show()
+
+# Q6: How does the number of major vessels (ca) relate to heart disease?
+plt.figure(figsize=(8,6))
+sns.countplot(x='ca', hue='target', data=data_cleaned)
+plt.title('Number of Major Vessels and Heart Disease')
+plt.show()
+
+# Q7: What is the relationship between ST depression (oldpeak) and heart disease?
+plt.figure(figsize=(8,6))
+sns.histplot(data=data_cleaned, x='oldpeak', hue='target', kde=True)
+plt.title('ST Depression by Heart Disease Status')
+plt.show()
+
+# 4. Data Visualization: Summary and Insights
+# Pairplot of all variables with hue based on the target variable
+sns.pairplot(data_cleaned, hue='target')
+plt.show()
+
+# Additional Visualizations can be added based on specific insights or hypotheses.
